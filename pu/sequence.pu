@@ -1,0 +1,26 @@
+@startuml sequence
+' フッター削除 採番
+hide footbox
+autonumber
+
+issue -> reviewee: issue作成
+reviewee -> GitHub: branch作成
+reviewee <- GitHub: branchをローカルにPullして作業
+reviewee -> GitHub: Pullrequest
+
+loop レビューコメントがなくなるまで
+  GitHub --> reviewer: Pullrequestを確認する
+
+  alt レビューコメントがある場合
+    GitHub <- reviewer: レビューコメントを返す
+
+    reviewee <-- GitHub: コメントを確認
+    reviewee -> GitHub: 修正をPushする
+
+    else レビューコメントがない場合
+    GitHub <- reviewer: マージ
+  end alt
+end loop
+
+GitHub -> issue: issueクローズ
+@enduml
