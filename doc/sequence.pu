@@ -1,4 +1,5 @@
 @startuml sequence
+' フッター削除 採番
 hide footbox
 autonumber
 
